@@ -1,4 +1,4 @@
-# **Alishba Haroon** 🌟  
+# **Alishba Haroon**   
 🚀 **Machine Learning | AI | Data Science | Web Development**  
 
 Welcome to my **Projects Repository**, where I showcase my **Machine Learning, AI, and Software Development** projects.  
