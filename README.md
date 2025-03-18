@@ -7,8 +7,7 @@ Welcome to my **Projects Repository**, where I showcase my **Machine Learning, A
 
 ## 🔥 **About Me**  
 - 🎓 **Bachelor of Science in Artificial Intelligence (BSAI)**  
-- 💻 **Skills:** Python, SQL, Machine Learning, Deep Learning, Web Development  
-- 🏆 **Intern at Vosyn** ($32/hr)  
+- 💻 **Skills:** Python, SQL, Machine Learning, Deep Learning, Web Development    
 - 💡 **Passionate about AI, Ethical Hacking, and Robotics**  
 
 ---
