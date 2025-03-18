@@ -22,10 +22,3 @@ Welcome to my **Projects Repository**, where I showcase my **Machine Learning, A
 | **Heart Disease Prediction** | Python, TensorFlow | ML-based heart disease detection |  
 
 ---
-
-## 🛠 **How to Use**  
-1. **Clone the repository**  
-   ```sh
-   git clone https://github.com/Alishba-Haroon/Projects.git
-   cd Projects
-# Projects.
