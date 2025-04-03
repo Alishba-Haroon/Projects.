@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Checker</title>
+    <style>
+        body {
+            background: url("{{ url_for('static', filename='background.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            width: 400px;
+            color: white;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        input, button {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        .back-btn {
+            background-color: #007bff;
+            margin-top: 10px;
+        }
+        #stock-result {
+            display: none;
+            font-size: 18px;
+            margin-top: 15px;
+        }
+        .green { color: #28a745; font-weight: bold; } 
+        .red { color: #dc3545; font-weight: bold; } 
+    </style>
+</head>
+<body>
+
+<div class="container" id="stock-form">
+    <h1>Stock Price Checker</h1>
+    <input type="text" id="stock-symbol" placeholder="Enter Stock Symbol">
+    <button onclick="fetchStock()">Check Price</button>
+</div>
+
+<div class="container" id="stock-result">
+    <h1>Stock Price Details</h1>
+    <p id="stock-price"></p>
+    <p id="stock-trend"></p>
+    <button class="back-btn" onclick="goBack()">Back</button>
+</div>
+
+<script>
+    function fetchStock() {
+        let symbol = document.getElementById("stock-symbol").value.toUpperCase();
+
+        if (!symbol) {
+            alert("Please enter a stock symbol!");
+            return;
+        }
+
+        fetch("/get_price", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ symbol: symbol })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("stock-price").innerHTML = `<p style="color: red;">${data.error}</p>`;
+                document.getElementById("stock-trend").innerHTML = "";
+            } 
+            else {
+                let price = data.price;
+                let previousPrice = price - (Math.random() * 20 - 10).toFixed(2);
+                
+                let trend = price > previousPrice ? `<span class="green">📈 Uptrend</span>` : `<span class="red">📉 Downtrend</span>`;
+
+                document.getElementById("stock-price").innerHTML = `Stock Price for ${symbol}: <span style="color: gold;">$${price}</span>`;
+                document.getElementById("stock-trend").innerHTML = `Trend: ${trend}`;
+            }
+
+            document.getElementById("stock-form").style.display = "none";
+            document.getElementById("stock-result").style.display = "block";
+        })
+        .catch(error => {
+            document.getElementById("stock-price").innerHTML = `<p style="color: red;">Error fetching data</p>`;
+            document.getElementById("stock-trend").innerHTML = "";
+        });
+    }
+
+    function goBack() {
+        document.getElementById("stock-form").style.display = "block";
+        document.getElementById("stock-result").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
