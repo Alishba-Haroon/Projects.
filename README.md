@@ -1,4 +1,4 @@
-# **Alishba Haroon** 🌟  
+# **Alishba Haroon**   
 🚀 **Machine Learning | AI | Data Science | Web Development**  
 
 Welcome to my **Projects Repository**, where I showcase my **Machine Learning, AI, and Software Development** projects.  
@@ -7,8 +7,7 @@ Welcome to my **Projects Repository**, where I showcase my **Machine Learning, A
 
 ## 🔥 **About Me**  
 - 🎓 **Bachelor of Science in Artificial Intelligence (BSAI)**  
-- 💻 **Skills:** Python, SQL, Machine Learning, Deep Learning, Web Development  
-- 🏆 **Intern at Vosyn** ($32/hr)  
+- 💻 **Skills:** Python, SQL, Machine Learning, Deep Learning, Web Development    
 - 💡 **Passionate about AI, Ethical Hacking, and Robotics**  
 
 ---
@@ -23,10 +22,3 @@ Welcome to my **Projects Repository**, where I showcase my **Machine Learning, A
 | **Heart Disease Prediction** | Python, TensorFlow | ML-based heart disease detection |  
 
 ---
-
-## 🛠 **How to Use**  
-1. **Clone the repository**  
-   ```sh
-   git clone https://github.com/Alishba-Haroon/Projects.git
-   cd Projects
-# Projects.
