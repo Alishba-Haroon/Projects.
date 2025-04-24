@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Finance Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('{{ url_for("static", filename="gettyimages-1488522537-640x640.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 150px;
+            height: auto;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: rgba(15, 19, 45, 0.4);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-height: 80vh;
+            overflow-y: auto;  /* Makes the container scrollable if needed */
+        }
+
+        h2 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input[type="text"], input[type="submit"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        input[type="text"] {
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            background-color: #1f3c5b;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .response-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            white-space: pre-wrap;
+        }
+
+        .response-box h4 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .response-box p {
+            font-size: 16px;
+            color: #444;
+        }
+
+        /* Display chat bubbles */
+        .message {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: #1f3c5b;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #eee;
+            color: black;
+            align-self: flex-start;
+        }
+
+        .chat-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+        }
+    </style>
+</head>
+<body>
+    <img src="{{ url_for('static', filename='Untitled-removebg-preview.png') }}" alt="Logo" class="logo">
+
+    <div class="container">
+        <h2>Ask the Finance Chatbot</h2>
+
+        <!-- Display chat history -->
+        <div class="chat-box">
+            {% for speaker, message in conversation %}
+                <div class="message {% if speaker == 'User' %}user-message{% else %}bot-message{% endif %}">
+                    <strong>{{ speaker }}:</strong> {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <form method="POST">
+            <div class="input-section">
+                <label for="query" style="color: #fff;"></label>
+                <input type="text" id="query" name="query" placeholder="e.g., How can I open a bank account?" required>
+                <input type="submit" value="Ask">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
