@@ -13,7 +13,7 @@ from sentence_transformers import SentenceTransformer
 import chromadb
 
 # SECRET for JWT
-SECRET_KEY = "your_secret_key_here"
+SECRET_KEY = "Enter_secret_key_here"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
@@ -23,7 +23,7 @@ app = FastAPI()
 fake_users_db = {
     "user1": {
         "username": "user1",
-        "hashed_password": "fakehashedpassword"
+        "hashed_password": "password"
     }
 }
 
