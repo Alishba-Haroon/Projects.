@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voice LLM Assistant</title>
+</head>
+<body>
+    <h1>Voice LLM Assistant</h1>
+    <button onclick="startListening()">🎤 Ask</button>
+    <p id="response"></p>
+
+    <script>
+        function startListening() {
+            fetch('/listen')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('response').innerText = "Assistant: " + data.response;
+                });
+        }
+    </script>
+</body>
+</html>
