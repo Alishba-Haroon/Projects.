@@ -1,40 +1,33 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import pandas as pd
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain.embeddings import HuggingFaceEmbeddings
 from sklearn.metrics.pairwise import cosine_similarity
-
 app = Flask(__name__)
 
-# Load dataset
-bank = pd.read_csv('Dataset_Banking_chatbot.csv', encoding='cp1252')
+DATASET_PATH = r'Dataset_Banking_chatbot.csv'
+MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+THRESHOLD = 0.7
+bank = pd.read_csv(DATASET_PATH, encoding='cp1252')
+embeddings = HuggingFaceEmbeddings(model_name=MODEL_NAME)
+query_embeddings = embeddings.embed_documents(bank["Query"].tolist())
 
-# Prepare formatted responses
-bank["ResponseFormatted"] = bank.apply(lambda row: f"Query: {row['Query']}\nAnswer: {row['Response']}", axis=1)
+def get_response(query):
+    user_embedding = embeddings.embed_query(query)
+    similarities = cosine_similarity([user_embedding], query_embeddings)[0]
+    best_match_index = similarities.argmax()
+    return bank.iloc[best_match_index]["Response"] if similarities[best_match_index] >= THRESHOLD else "Sorry, please ask a question related to finance."
 
-# Load embedding model
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-MiniLM-L3-v2")
-
-# Precompute embeddings
-queries = bank["Query"].tolist()
-query_embeddings = embeddings.embed_documents(queries)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     conversation = []
-
     if request.method == 'POST':
         user_input = request.form['query']
-        user_embedding = embeddings.embed_query(user_input)
-
-        # Find most similar query
-        similarities = cosine_similarity([user_embedding], query_embeddings)[0]
-        best_match_index = similarities.argmax()
-        bot_response = bank.iloc[best_match_index]["Response"]
-
-        # Just show the current user-bot exchange
+        bot_response = get_response(user_input)
         conversation = [('User', user_input), ('Bot', bot_response)]
-
     return render_template('index.html', conversation=conversation)
-
+@app.route('/ask', methods=['POST'])
+def ask():
+    return jsonify({'response': get_response(request.get_json()['query'])})
 if __name__ == '__main__':
     app.run(debug=True)
